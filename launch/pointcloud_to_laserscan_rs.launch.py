@@ -28,23 +28,24 @@ def generate_launch_description():
         #),
         Node(
             package='pointcloud_to_laserscan', executable='pointcloud_to_laserscan_node',
-            remappings=[('cloud_in', '/camera/rs_bottom/depth/color/points'),
+            remappings=[('cloud_in', '/rs_top/camera/depth/color/points'),
                         ('footprint', '/published_footprint'),
-                        ('scan', '/scan')],
+                        ('scan', '/scan_pcl')],
             parameters=[{
-                'target_frame': 'Camera_Bottom_1',
+                'target_frame': 'base_link',
                 'transform_tolerance': 0.01,
-                'min_height': 0.2,
-                'max_height': 3.0,
-                'angle_min': -1.5708,  # -M_PI/2
-                'angle_max': 1.5708,  # M_PI/2
+                'min_height': 0.15,
+                'max_height': 0.5,
+                'angle_min': -0.872665,  # -M_PI/2
+                'angle_max':  0.872665,  # M_PI/2
                 'angle_increment': 0.0087,  # M_PI/360.0
                 'scan_time': 0.3333,
-                'range_min': 0.05,
+                'range_min': 0.5,
                 'range_max': 1.5,
                 'use_inf': False,
                 'inf_epsilon': 1.0
             }],
-            name='pointcloud_to_laserscan'
+            name='pointcloud_to_laserscan',
+            #prefix=['xterm -e gdb -ex run --args'],
         )
     ])
